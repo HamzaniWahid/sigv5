@@ -62,7 +62,7 @@
       <div class="mt-5 sm:mt-8">
         <!-- First Contnet -->
         <div data-hs-stepper-content-item='{"index": 1}'>
-          <div class="flex flex-col items-center justify-center h-48 p-4 border border-gray-200 border-dashed bg-gray-50 rounded-xl dark:bg-neutral-700 dark:border-neutral-600">
+          <div class="flex flex-col items-center justify-center p-4 border border-gray-200 border-dashed bg-gray-50 rounded-xl dark:bg-neutral-700 dark:border-neutral-600">
             <h3 class="mb-5 text-gray-500 dark:text-neutral-400">
               Isi Data Responden
             </h3>
@@ -77,10 +77,11 @@
         <div data-hs-stepper-content-item='{
           "index": 2
         }' style="display: none;">
-          <div class="flex items-center justify-center h-48 p-4 border border-gray-200 border-dashed bg-gray-50 rounded-xl dark:bg-neutral-700 dark:border-neutral-600">
+          <div class="flex items-center justify-center p-4 border border-gray-200 border-dashed bg-gray-50 rounded-xl dark:bg-neutral-700 dark:border-neutral-600">
             <h3 class="text-gray-500 dark:text-neutral-400">
-              @yield('due')
+              
             </h3>
+            @yield('due')
           </div>
         </div>
         <!-- End First Contnet -->
@@ -89,7 +90,7 @@
         <div data-hs-stepper-content-item='{
           "index": 3
         }' style="display: none;">
-          <div class="flex items-center justify-center h-48 p-4 border border-gray-200 border-dashed bg-gray-50 rounded-xl dark:bg-neutral-700 dark:border-neutral-600">
+          <div class="flex items-center justify-center p-4 border border-gray-200 border-dashed bg-gray-50 rounded-xl dark:bg-neutral-700 dark:border-neutral-600">
             <h3 class="text-gray-500 dark:text-neutral-400">
               Third content
             </h3>

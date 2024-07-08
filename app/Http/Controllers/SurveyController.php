@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hasil;
 use App\Models\Jawaban;
 use App\Models\Kuisioner;
 use App\Models\Survey;
@@ -10,25 +11,30 @@ use View;
 
 class SurveyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $jawaban = [];
-        $jawabans = Jawaban::all();
-        $surveys = Survey::all();
-        $kuisioner = Kuisioner::all();
-        foreach($kuisioner as $item){
-            foreach($jawabans as $items){
-            $jawaban = Jawaban::where('id', $item->id)->get();
-            }
+        $results = Kuisioner::with('jawabans')->get();
+        $surveys = Survey::with('kuisioners.jawabans')->where('status', true)->get();
+        return view('survey.index', compact('surveys','results'));
+    }
+
+    public function submit(Request $request, $surveyId)
+    {
+        $data = $request->validate([
+            'answers' => 'required|array',
+            'answers.*' => 'required|exists:jawabans,id',
+        ]);
+
+        foreach ($data['answers'] as $kuisionerId => $jawabanId) {
+            Hasil::create([
+                'survey_id' => $surveyId,
+                'kuisioner_id' => $kuisionerId,
+                'jawaban_id' => $jawabanId,
+                'user_id' => auth()->id(),
+            ]);
         }
-        
-        // return dd($jawabans);
-        return view('survey.index', compact('surveys', 'kuisioner','jawaban'));
+
+        return redirect()->route('survey.showByStatus', 'your-status-here')->with('success', 'Jawaban berhasil disimpan.');
     }
 
     /**

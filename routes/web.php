@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [SurveyController::class, 'index']);
+// Route::get('/surveys/status/{status}', [SurveyController::class, 'showByStatus'])->name('survey.showByStatus');
+Route::post('/survey/{surveyId}/submit', [SurveyController::class, 'submit'])->name('survey.submit');
+
 
 // Route::get('/', function () {
 //     return view('survey.index');

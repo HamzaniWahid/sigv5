@@ -15,7 +15,7 @@ class Survey extends Model
         'status'
     ];
 
-    public function kuisioner(): HasMany
+    public function kuisioners(): HasMany
     {
         return $this->hasMany(Kuisioner::class);
     }

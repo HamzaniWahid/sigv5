@@ -31,7 +31,7 @@ class KuisionerResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('surveys_id')->label('Surveys')
+                Select::make('survey_id')->label('Surveys')
                     ->options(Survey::all()->pluck('nama', 'id'))->required(),
                 Textarea::make('pertanyaan')->required(),
                 // Select::make('tipe')->options(['isian'=>'Isian','pilihanganda'=>'Pilihan Ganda'])->default('pilihanganda'),
@@ -45,7 +45,7 @@ class KuisionerResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('surveys.nama'),
+                TextColumn::make('survey.nama')->label('Surveys'),
                 TextColumn::make('pertanyaan'),
                 // TextColumn::make('tipe'),
                 TextColumn::make('level'),

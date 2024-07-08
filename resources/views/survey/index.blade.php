@@ -17,25 +17,76 @@
             </form>
         @endsection
         @section('due')
+        <div class="flex flex-col">
             @php
                 $no = 1;
             @endphp
-            @foreach ($kuisioner as $item)
-                <p>No. {{ $no }}</p>
-                {{ $item->pertanyaan }}
-                @foreach ($jawaban as $item)
-                    <br>
-                    {{ $item }}
+            {{-- tampil survey --}}
+            @foreach ($surveys as $survey)
+                <h1>Survey: {{ $survey->nama }}</h1>
+                <br>
+                {{-- tampil kuisioner --}}
+                @foreach ($survey->kuisioners as $kuisioner)
+                    @if ($kuisioner->level == false)
+                        <div class="mb-4">
+                            <h4>No.{{ $no }} {{ $kuisioner->pertanyaan }}</h4>
+                            <form action="{{ route('survey.submit', $survey->id) }}" method="POST">
+                                @csrf
+                                {{-- tampil jawaban --}}
+                                @foreach ($kuisioner->jawabans as $jawaban)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                            name="answers[{{ $kuisioner->id }}]" id="jawaban_{{ $jawaban->id }}"
+                                            value="{{ $jawaban->id }}" data-answer="{{ $jawaban->jawaban }}">
+                                        <label class="form-check-label" for="jawaban_{{ $jawaban->id }}">
+                                            {{ $jawaban->jawaban }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </form>
+                        </div>
+                        @php
+                            $no++;
+                        @endphp
+                    @elseif($kuisioner->level == true)
+                        <div id="sub" class="mb-4" hidden>
+                            <h4>No.{{ $no }} {{ $kuisioner->pertanyaan }}</h4>
+                            <form action="{{ route('survey.submit', $survey->id) }}" method="POST">
+                                @csrf
+                                {{-- tampil jawaban --}}
+                                @foreach ($kuisioner->jawabans as $jawaban)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                            name="answers[{{ $kuisioner->id }}]" id="jawaban_{{ $jawaban->id }}"
+                                            value="{{ $jawaban->id }}">
+                                        <label class="form-check-label" for="jawaban_{{ $jawaban->id }}">
+                                            {{ $jawaban->jawaban }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </form>
+                        </div>
+                    @endif
                 @endforeach
-                {{-- @foreach ($jawaban as $item)
-                    <ul>
-                        <li>{{ $item->jawaban }}</li>
-                    </ul>
-                @endforeach --}}
-                @php
-                    $no++;
-                @endphp
             @endforeach
+        </div>
+        
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const radioButtons = document.querySelectorAll('.form-check-input');
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    const subDiv = document.getElementById('sub');
+                    if (this.dataset.answer.toLowerCase() === 'iya') {
+                        subDiv.hidden = false;
+                    } else {
+                        subDiv.hidden = true;
+                    }
+                });
+            });
+        });
+        </script>
+        
         @endsection
         @section('telu')
             Telu
