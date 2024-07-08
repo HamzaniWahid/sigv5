@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SurveyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [SurveyController::class, 'index']);
+
+// Route::get('/', function () {
+//     return view('survey.index');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');

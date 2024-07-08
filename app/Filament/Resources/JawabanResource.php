@@ -2,23 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\KuisionerJawabanResource\Pages;
-use App\Filament\Resources\KuisionerJawabanResource\RelationManagers;
-use App\Models\Kuisioner;
-use App\Models\KuisionerJawaban;
+use App\Filament\Resources\JawabanResource\Pages;
+use App\Filament\Resources\JawabanResource\RelationManagers;
+use App\Models\Jawaban;
 use Filament\Forms;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class KuisionerJawabanResource extends Resource
+class JawabanResource extends Resource
 {
-    protected static ?string $model = KuisionerJawaban::class;
+    protected static ?string $model = Jawaban::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -26,14 +25,9 @@ class KuisionerJawabanResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('kuisioner_id')->label('Kuisioner')
-                ->options(
-                    Kuisioner::all()->pluck('pertanyaan', 'id')
-                ),
                 TextInput::make('jawaban'),
                 TextInput::make('keterangan'),
                 TextInput::make('lainnya'),
-                TextInput::make('level'),
             ]);
     }
 
@@ -41,7 +35,9 @@ class KuisionerJawabanResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('jawaban'),
+                TextColumn::make('keterangan'),
+                TextColumn::make('lainnya'),
             ])
             ->filters([
                 //
@@ -65,10 +61,10 @@ class KuisionerJawabanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListKuisionerJawabans::route('/'),
-            'create' => Pages\CreateKuisionerJawaban::route('/create'),
-            'view' => Pages\ViewKuisionerJawaban::route('/{record}'),
-            'edit' => Pages\EditKuisionerJawaban::route('/{record}/edit'),
+            'index' => Pages\ListJawabans::route('/'),
+            'create' => Pages\CreateJawaban::route('/create'),
+            'view' => Pages\ViewJawaban::route('/{record}'),
+            'edit' => Pages\EditJawaban::route('/{record}/edit'),
         ];
     }    
 }

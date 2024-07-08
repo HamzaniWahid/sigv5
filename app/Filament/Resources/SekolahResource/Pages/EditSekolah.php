@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\KuisionerResource\Pages;
+namespace App\Filament\Resources\SekolahResource\Pages;
 
-use App\Filament\Resources\KuisionerResource;
+use App\Filament\Resources\SekolahResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditKuisioner extends EditRecord
+class EditSekolah extends EditRecord
 {
-    protected static string $resource = KuisionerResource::class;
+    protected static string $resource = SekolahResource::class;
 
     protected function getActions(): array
     {

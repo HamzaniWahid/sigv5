@@ -4,17 +4,16 @@ namespace App\Filament\Resources\KuisionerResource\Pages;
 
 use App\Filament\Resources\KuisionerResource;
 use Filament\Pages\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ViewRecord;
 
-class EditKuisioner extends EditRecord
+class ViewKuisioner extends ViewRecord
 {
     protected static string $resource = KuisionerResource::class;
 
     protected function getActions(): array
     {
         return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\EditAction::make(),
         ];
     }
 }

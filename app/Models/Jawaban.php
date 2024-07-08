@@ -6,19 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class KuisionerJawaban extends Model
+class Jawaban extends Model
 {
     use HasFactory;
 
-    // protected $guarded = [];
-    protected $fillabel = [
-        'kuisioner_id',
-        'jawaban',
-        'keterangan',
-        'lainnya'
-    ];
+    protected $guarded = [];
 
-    public function kuisioner(): BelongsTo
+    public function kuisioners() : BelongsTo 
     {
         return $this->belongsTo(Kuisioner::class);
     }

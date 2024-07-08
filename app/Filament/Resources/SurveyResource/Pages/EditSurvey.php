@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\KuisionerResource\Pages;
+namespace App\Filament\Resources\SurveyResource\Pages;
 
-use App\Filament\Resources\KuisionerResource;
+use App\Filament\Resources\SurveyResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditKuisioner extends EditRecord
+class EditSurvey extends EditRecord
 {
-    protected static string $resource = KuisionerResource::class;
+    protected static string $resource = SurveyResource::class;
 
     protected function getActions(): array
     {

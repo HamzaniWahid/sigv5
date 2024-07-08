@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Kuisioner extends Model
@@ -11,13 +12,18 @@ class Kuisioner extends Model
     use HasFactory;
     // protected $guarded = [];
     protected $fillable = [
+        'surveys_id',
         'pertanyaan',
-        'tipe',
         'level',
         'syarat'
     ];
-    public function kuisionerJawaban(): HasMany
+
+    public function surveys(): BelongsTo
     {
-        return $this->hasMany(KuisionerJawaban::class);
+        return $this->belongsTo(Survey::class);
+    }
+    public function jawabans(): HasMany
+    {
+        return $this->hasMany(Jawaban::class);
     }
 }
