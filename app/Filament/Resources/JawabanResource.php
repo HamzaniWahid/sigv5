@@ -20,6 +20,17 @@ class JawabanResource extends Resource
     protected static ?string $model = Jawaban::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationGroup = 'Survei';
+    protected static ?string $navigationLabel = 'Jawaban Kuisioner';
+    protected static ?int $navigationSort = 3;
+    protected static function getNavigationBadgeColor(): ?string
+{
+    return static::getModel()::count() > 10 ? 'warning' : 'primary';
+}
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -35,9 +46,9 @@ class JawabanResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('jawaban'),
+                TextColumn::make('jawaban')->searchable(),
                 TextColumn::make('keterangan'),
-                TextColumn::make('lainnya'),
+                TextColumn::make('lainnya')->searchable(),
             ])
             ->filters([
                 //

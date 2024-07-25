@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('jurusans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sekolahs_id')->constrained()->onDelete('cascade');
             $table->string('nama');
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sekolah_jurusans');
+        Schema::dropIfExists('jurusans');
     }
 };

@@ -20,6 +20,16 @@ class SekolahResource extends Resource
     protected static ?string $model = Sekolah::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationGroup = 'Data';
+    protected static ?string $navigationLabel = 'Sekolah';
+    protected static function getNavigationBadgeColor(): ?string
+{
+    return static::getModel()::count() > 10 ? 'warning' : 'primary';
+}
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -36,8 +46,8 @@ class SekolahResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nama'),
-                TextColumn::make('alamat'),
+                TextColumn::make('nama')->searchable(),
+                TextColumn::make('alamat')->searchable(),
                 TextColumn::make('lokasi_latlng'),
                 TextColumn::make('web'),
             ])

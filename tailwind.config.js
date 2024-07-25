@@ -1,4 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+import colors from 'tailwindcss/colors';
+import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -14,8 +16,14 @@ module.exports = {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: { 
+                danger: colors.rose,
+                primary: colors.green,
+                success: colors.blue,
+                warning: colors.yellow,
+            }, 
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), require('preline/plugin'),],
+    plugins: [require('@tailwindcss/forms'), require('preline/plugin'),typography],
 };

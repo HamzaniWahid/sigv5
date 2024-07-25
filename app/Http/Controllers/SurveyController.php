@@ -4,102 +4,80 @@ namespace App\Http\Controllers;
 
 use App\Models\Hasil;
 use App\Models\Jawaban;
+use App\Models\Jurusan;
 use App\Models\Kuisioner;
+use App\Models\Responden;
+use App\Models\Sekolah;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use View;
 
 class SurveyController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $results = Kuisioner::with('jawabans')->get();
-        $surveys = Survey::with('kuisioners.jawabans')->where('status', true)->get();
-        return view('survey.index', compact('surveys','results'));
+        $sekolahs = Sekolah::all();
+        $jurusans = Jurusan::all();
+        $surveys = Survey::with('kuisioners.jawabans', 'kategories')->get();
+        return view('survey.index', compact('surveys', 'sekolahs', 'jurusans'));
     }
 
-    public function submit(Request $request, $surveyId)
+    public function responden(Request $request)
+    {
+        // validasi
+        $data = $request->validate([
+            'nama' => 'required|string|max:255',
+            'jenis_kelamin' => 'required|string',
+            'sekolah_id' => 'required|exists:sekolahs,id',
+            'jurusan_id' => 'required|exists:jurusans,id',
+        ]);
+
+        // Save respondent data
+        Responden::create([
+            'user_id' => 1,
+            'survey_id' => 1,
+            'nama' => $data['nama'],
+            'jenis_kelamin' => $data['jenis_kelamin'],
+            'sekolah_id' => $data['sekolah_id'],
+            'jurusan_id' => $data['jurusan_id'],
+        ]);
+    }
+
+    public function submit(Request $request)
     {
         $data = $request->validate([
+            'nama' => 'required|string|max:255',
+            'jenis_kelamin' => 'required|string',
+            'sekolah_id' => 'required|exists:sekolahs,id',
+            'jurusan_id' => 'required|exists:jurusans,id',
             'answers' => 'required|array',
             'answers.*' => 'required|exists:jawabans,id',
         ]);
+        // validasi
+        // $data = $request->validate([
+        // ]);
 
+        // Save respondent data
+        Responden::create([
+            'user_id' => 1,
+            'survey_id' => 1,
+            'nama' => $data['nama'],
+            'jenis_kelamin' => $data['jenis_kelamin'],
+            'sekolah_id' => $data['sekolah_id'],
+            'jurusan_id' => $data['jurusan_id'],
+        ]);
+        // Save survey answers
         foreach ($data['answers'] as $kuisionerId => $jawabanId) {
             Hasil::create([
-                'survey_id' => $surveyId,
+                'user_id' => 1,
+                'survey_id' => 1,
                 'kuisioner_id' => $kuisionerId,
+                'responden_id' => 1,
                 'jawaban_id' => $jawabanId,
-                'user_id' => auth()->id(),
             ]);
         }
 
-        return redirect()->route('survey.showByStatus', 'your-status-here')->with('success', 'Jawaban berhasil disimpan.');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        // return view('landing-page');
+        return redirect()->route('home');
     }
 }

@@ -15,13 +15,11 @@ return new class extends Migration
     {
         Schema::create('respondens', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('users_id')->constrained()->onDelete('cascade');
-            $table->foreignId('kuisioners_id')->constrained('kuisioners')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('survey_id')->constrained('surveys')->onDelete('cascade');
             $table->string('nama');
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
-            $table->string('kontak')->nullable();
             $table->foreignId('sekolahs_id')->constrained()->onDelete('cascade');
-            $table->foreignId('wilayahs_id')->constrained()->onDelete('cascade');
             $table->foreignId('jurusan_id')->constrained()->onDelete('cascade'); 
             $table->timestamps();
         });

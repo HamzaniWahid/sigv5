@@ -7,29 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Kuisioner extends Model
+class Kategori extends Model
 {
     use HasFactory;
-    // protected $guarded = [];
+
+    protected $table = "kategories";
     protected $fillable = [
         'survey_id',
-        'pertanyaan',
-        'kategori_id',
-        'level',
-        'syarat'
+        'nama'
     ];
 
     public function survey(): BelongsTo
     {
         return $this->belongsTo(Survey::class);
     }
-    public function jawabans(): HasMany
-    {
-        return $this->hasMany(Jawaban::class);
-    }
-    public function kategori(): BelongsTo
-    {
-        return $this->belongsTo(Kategori::class);
-    }
 
+    public function kuisioners(): HasMany
+    {
+        return $this->hasMany(Kuisioner::class);
+    }
 }

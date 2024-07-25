@@ -1,3 +1,0 @@
-<div>
-    Tes Survey
-</div>

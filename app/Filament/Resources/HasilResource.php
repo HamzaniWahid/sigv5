@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\WilayahResource\Pages;
-use App\Filament\Resources\WilayahResource\RelationManagers;
-use App\Models\Wilayah;
+use App\Filament\Resources\HasilResource\Pages;
+use App\Filament\Resources\HasilResource\RelationManagers;
+use App\Models\Hasil;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -14,27 +14,17 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class WilayahResource extends Resource
+class HasilResource extends Resource
 {
-    protected static ?string $model = Wilayah::class;
+    protected static ?string $model = Hasil::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
-    protected static ?string $navigationGroup = 'Data';
-    protected static ?string $navigationLabel = 'Wilayah Kecamatan';
-    protected static function getNavigationBadgeColor(): ?string
-{
-    return static::getModel()::count() > 10 ? 'warning' : 'primary';
-}
-    protected static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                
             ]);
     }
 
@@ -42,9 +32,7 @@ class WilayahResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nama')->searchable(),
-                TextColumn::make('warna'),
-                TextColumn::make('polygon_latlng'),
+                TextColumn::make('user_id')
             ])
             ->filters([
                 //
@@ -68,10 +56,10 @@ class WilayahResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListWilayahs::route('/'),
-            'create' => Pages\CreateWilayah::route('/create'),
-            'view' => Pages\ViewWilayah::route('/{record}'),
-            'edit' => Pages\EditWilayah::route('/{record}/edit'),
+            'index' => Pages\ListHasils::route('/'),
+            'create' => Pages\CreateHasil::route('/create'),
+            'view' => Pages\ViewHasil::route('/{record}'),
+            'edit' => Pages\EditHasil::route('/{record}/edit'),
         ];
     }    
 }

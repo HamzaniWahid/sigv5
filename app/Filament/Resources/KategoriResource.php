@@ -2,12 +2,13 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SurveyResource\Pages;
-use App\Filament\Resources\SurveyResource\RelationManagers;
+use App\Filament\Resources\KategoriResource\Pages;
+use App\Filament\Resources\KategoriResource\RelationManagers;
+use App\Models\Kategori;
 use App\Models\Survey;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -16,29 +17,30 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SurveyResource extends Resource
+class KategoriResource extends Resource
 {
-    protected static ?string $model = Survey::class;
+    protected static ?string $model = Kategori::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
-    protected static ?string $navigationLabel = 'Survei';
     protected static ?string $navigationGroup = 'Survei';
-    protected static ?int $navigationSort = 1;
+    protected static ?string $navigationLabel = 'Kategori Survei';
+    protected static ?int $navigationSort = 4;
+    protected static function getNavigationBadgeColor(): ?string
+{
+    return static::getModel()::count() > 10 ? 'warning' : 'primary';
+}
     protected static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
     }
-    protected static function getNavigationBadgeColor(): ?string
-    {
-        return static::getModel()::count() > 10 ? 'warning' : 'primary';
-    }
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Select::make('survey_id')->options(Survey::all()->pluck('nama', 'id')),
                 TextInput::make('nama'),
-                Toggle::make('status'),
             ]);
     }
 
@@ -46,8 +48,8 @@ class SurveyResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('survey.nama'),
                 TextColumn::make('nama'),
-                TextColumn::make('status'),
             ])
             ->filters([
                 //
@@ -60,21 +62,21 @@ class SurveyResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-
+    
     public static function getRelations(): array
     {
         return [
-            RelationManagers\KategoriesRelationManager::class,
+            //
         ];
     }
-
+    
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSurveys::route('/'),
-            'create' => Pages\CreateSurvey::route('/create'),
-            'view' => Pages\ViewSurvey::route('/{record}'),
-            'edit' => Pages\EditSurvey::route('/{record}/edit'),
+            'index' => Pages\ListKategoris::route('/'),
+            'create' => Pages\CreateKategori::route('/create'),
+            'view' => Pages\ViewKategori::route('/{record}'),
+            'edit' => Pages\EditKategori::route('/{record}/edit'),
         ];
-    }
+    }    
 }

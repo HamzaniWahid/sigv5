@@ -10,6 +10,7 @@ class Survey extends Model
 {
     use HasFactory;
 
+    protected $table = "surveys";
     protected $fillable = [
         'nama',
         'status'
@@ -18,5 +19,9 @@ class Survey extends Model
     public function kuisioners(): HasMany
     {
         return $this->hasMany(Kuisioner::class);
+    }
+    public function kategories(): HasMany
+    {
+        return $this->hasMany(Kategori::class);
     }
 }
