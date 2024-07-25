@@ -15,12 +15,10 @@ return new class extends Migration
     {
         Schema::create('kuisioners', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('surveys_id')->constrained()->onDelete('cascade');
+            $table->foreignId('surveys_id')->constrained()->onDelete('cascade');
             $table->string('pertanyaan');
-            $table->enum('tipe', ['isian', 'pilihan_ganda']);
-            $table->integer('level')->nullable();
+            $table->boolean('level');
             $table->integer('syarat')->nullable();
-            // $table->foreignId('hasil_id')->nullable()->constrained('kuisioner_hasils')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,4 +32,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('kuisioners');
     }
+
+
 };

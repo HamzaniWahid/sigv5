@@ -2,38 +2,39 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\KuisionerJawabanResource\Pages;
-use App\Filament\Resources\KuisionerJawabanResource\RelationManagers;
-use App\Models\Kuisioner;
-use App\Models\KuisionerJawaban;
+use App\Filament\Resources\WilayahResource\Pages;
+use App\Filament\Resources\WilayahResource\RelationManagers;
+use App\Models\Wilayah;
 use Filament\Forms;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class KuisionerJawabanResource extends Resource
+class WilayahResource extends Resource
 {
-    protected static ?string $model = KuisionerJawaban::class;
+    protected static ?string $model = Wilayah::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationGroup = 'Data';
+    protected static ?string $navigationLabel = 'Wilayah Kecamatan';
+    protected static function getNavigationBadgeColor(): ?string
+{
+    return static::getModel()::count() > 10 ? 'warning' : 'primary';
+}
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Select::make('kuisioner_id')->label('Kuisioner')
-                ->options(
-                    Kuisioner::all()->pluck('pertanyaan', 'id')
-                ),
-                TextInput::make('jawaban'),
-                TextInput::make('keterangan'),
-                TextInput::make('lainnya'),
-                TextInput::make('level'),
+                //
             ]);
     }
 
@@ -41,7 +42,9 @@ class KuisionerJawabanResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('nama')->searchable(),
+                TextColumn::make('warna'),
+                TextColumn::make('polygon_latlng'),
             ])
             ->filters([
                 //
@@ -65,10 +68,10 @@ class KuisionerJawabanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListKuisionerJawabans::route('/'),
-            'create' => Pages\CreateKuisionerJawaban::route('/create'),
-            'view' => Pages\ViewKuisionerJawaban::route('/{record}'),
-            'edit' => Pages\EditKuisionerJawaban::route('/{record}/edit'),
+            'index' => Pages\ListWilayahs::route('/'),
+            'create' => Pages\CreateWilayah::route('/create'),
+            'view' => Pages\ViewWilayah::route('/{record}'),
+            'edit' => Pages\EditWilayah::route('/{record}/edit'),
         ];
     }    
 }

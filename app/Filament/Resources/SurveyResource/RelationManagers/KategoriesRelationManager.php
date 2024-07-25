@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\KuisionerResource\RelationManagers;
+namespace App\Filament\Resources\SurveyResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -10,17 +10,17 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class KuisionerJawabanRelationManager extends RelationManager
+class KategoriesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'kuisionerJawaban';
+    protected static string $relationship = 'kategories';
 
-    protected static ?string $recordTitleAttribute = 'jawaban';
+    protected static ?string $recordTitleAttribute = 'nama';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('jawaban')
+                Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -30,7 +30,7 @@ class KuisionerJawabanRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('jawaban'),
+                Tables\Columns\TextColumn::make('nama'),
             ])
             ->filters([
                 //
