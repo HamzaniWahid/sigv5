@@ -19,6 +19,9 @@ class HasilResource extends Resource
     protected static ?string $model = Hasil::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationGroup = 'Survei';
+    protected static ?string $navigationLabel = 'Hasil';
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {

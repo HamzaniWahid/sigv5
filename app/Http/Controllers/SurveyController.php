@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hasil;
 use App\Models\Jawaban;
 use App\Models\Jurusan;
+use App\Models\Kelas;
 use App\Models\Kuisioner;
 use App\Models\Responden;
 use App\Models\Sekolah;
@@ -18,8 +19,9 @@ class SurveyController extends Controller
     {
         $sekolahs = Sekolah::all();
         $jurusans = Jurusan::all();
+        $kelas = Kelas::all();
         $surveys = Survey::with('kuisioners.jawabans', 'kategories')->get();
-        return view('survey.index', compact('surveys', 'sekolahs', 'jurusans'));
+        return view('survey.index', compact('surveys', 'sekolahs', 'jurusans', 'kelas'));
     }
 
     public function responden(Request $request)
@@ -50,6 +52,7 @@ class SurveyController extends Controller
             'jenis_kelamin' => 'required|string',
             'sekolah_id' => 'required|exists:sekolahs,id',
             'jurusan_id' => 'required|exists:jurusans,id',
+            'kelas_id' => 'required|exists:kelas,id',
             'answers' => 'required|array',
             'answers.*' => 'required|exists:jawabans,id',
         ]);
@@ -65,6 +68,7 @@ class SurveyController extends Controller
             'jenis_kelamin' => $data['jenis_kelamin'],
             'sekolah_id' => $data['sekolah_id'],
             'jurusan_id' => $data['jurusan_id'],
+            'kelas_id' => $data['kelas_id'],
         ]);
         // Save survey answers
         foreach ($data['answers'] as $kuisionerId => $jawabanId) {

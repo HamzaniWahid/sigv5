@@ -19,7 +19,7 @@ class SekolahResource extends Resource
 {
     protected static ?string $model = Sekolah::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
     protected static ?string $navigationGroup = 'Data';
     protected static ?string $navigationLabel = 'Sekolah';
     protected static function getNavigationBadgeColor(): ?string
@@ -46,20 +46,18 @@ class SekolahResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nama')->searchable(),
-                TextColumn::make('alamat')->searchable(),
-                TextColumn::make('lokasi_latlng'),
-                TextColumn::make('web'),
+                TextColumn::make('id')->searchable()->label('ID')->wrap(),
+                TextColumn::make('nama')->searchable()->label('Nama')->wrap(),
+                TextColumn::make('alamat')->searchable()->label('Alamat')->wrap(),
+                TextColumn::make('lokasi_latlng')->label('Koordinat')->wrap(),
+                TextColumn::make('web')->label('Situs Web')->wrap(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
     

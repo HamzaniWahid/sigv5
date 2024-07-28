@@ -6,10 +6,12 @@ use App\Filament\Resources\WilayahResource\Pages;
 use App\Filament\Resources\WilayahResource\RelationManagers;
 use App\Models\Wilayah;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -18,7 +20,7 @@ class WilayahResource extends Resource
 {
     protected static ?string $model = Wilayah::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-map';
     protected static ?string $navigationGroup = 'Data';
     protected static ?string $navigationLabel = 'Wilayah Kecamatan';
     protected static function getNavigationBadgeColor(): ?string
@@ -34,7 +36,9 @@ class WilayahResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('nama')->label('Nama'),
+                TextInput::make('warna')->label('Warna')->type('color'),
+                TextInput::make('polygon_latlng')->label('Korrdinat'),
             ]);
     }
 
@@ -42,9 +46,9 @@ class WilayahResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nama')->searchable(),
-                TextColumn::make('warna'),
-                TextColumn::make('polygon_latlng'),
+                TextColumn::make('nama')->searchable()->label('Nama'),
+                ColorColumn::make('warna')->label('Warna/Kecamatan'),
+                TextColumn::make('polygon_latlng')->label('Koordinat')->wrap()->limit(50),
             ])
             ->filters([
                 //

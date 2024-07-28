@@ -62,6 +62,20 @@
                                 <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
+                        {{-- Kelas --}}
+                        <div class="max-w-sm mb-4 space-y-3">
+                            <label for="kelas_id" class="block mb-2 text-sm font-medium">Kelas</label>
+                            <select id="kelas_id" name="kelas_id" required
+                                class="@error('kelas_id') border-red-500 @enderror block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-green-500 focus:ring-green-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                                <option value="">-- Pilih Kelas --</option>
+                                @foreach ($kelas as $kls)
+                                    <option value="{{ $kls->id }}">{{ $kls->nama }}</option>
+                                @endforeach
+                            </select>
+                            @error('kelas_id')
+                                <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
                     {{-- <button type="submit">tes</button>
                 </form> --}}
@@ -74,6 +88,7 @@
                             Jika Anda tidak yakin dengan jawaban Anda,
                             pilihlah jawaban yang paling dekat dengan kondisi yang sebenarnya
                         </p>
+                        <hr>
                         <br>
                         @foreach ($survey->kategories as $kategori)
                             <h3 class="mb-2 font-bold dark:text-white text-md">Bagian.{{ $loop->iteration }}
@@ -83,7 +98,7 @@
                                     <h4>No.{{ $loop->iteration }} {{ $kuisioner->pertanyaan }}</h4>
                                     @foreach ($kuisioner->jawabans as $jawaban)
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" required
+                                            <input class="m-2 form-check-input" type="radio" required
                                                 name="answers[{{ $kuisioner->id }}]" id="jawaban_{{ $jawaban->id }}"
                                                 value="{{ $jawaban->id }}" x-model="answers[{{ $kuisioner->id }}]"
                                                 @click="showSub = ['Ya'].includes('{{ $jawaban->jawaban }}')">
@@ -98,7 +113,7 @@
                                             <h4>No.1.{{ $loop->iteration }} {{ $sub->pertanyaan }}</h4>
                                             @foreach ($sub->jawabans as $jawaban)
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio"
+                                                    <input class="m-2 form-check-input" type="radio"
                                                         name="answers[{{ $sub->id }}]"
                                                         id="jawaban_{{ $jawaban->id }}" value="{{ $jawaban->id }}">
                                                     <label class="form-check-label" for="jawaban_{{ $jawaban->id }}">
