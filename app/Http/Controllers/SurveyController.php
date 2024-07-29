@@ -61,7 +61,7 @@ class SurveyController extends Controller
         // ]);
 
         // Save respondent data
-        Responden::create([
+        $responden = Responden::create([
             'user_id' => 1,
             'survey_id' => 1,
             'nama' => $data['nama'],
@@ -70,13 +70,14 @@ class SurveyController extends Controller
             'jurusan_id' => $data['jurusan_id'],
             'kelas_id' => $data['kelas_id'],
         ]);
+        $respondenId = $responden->id;
         // Save survey answers
         foreach ($data['answers'] as $kuisionerId => $jawabanId) {
             Hasil::create([
                 'user_id' => 1,
                 'survey_id' => 1,
                 'kuisioner_id' => $kuisionerId,
-                'responden_id' => 1,
+                'responden_id' => $respondenId,
                 'jawaban_id' => $jawabanId,
             ]);
         }
