@@ -10,4 +10,14 @@ class Responden extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function sekolah(){
+        return $this->belongsTo(Sekolah::class);
+    }
+    public function jurusan(){
+        return $this->belongsTo(Jurusan::class);
+    }
+    public function kelas(){
+        return $this->belongsTo(Kelas::class);
+    }
 }

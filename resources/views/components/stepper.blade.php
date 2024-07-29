@@ -55,7 +55,7 @@
                   </svg>
               </span>
               <span class="text-sm font-medium text-gray-800 ms-2 dark:text-white">
-                  Saran
+                  Selesai
               </span>
           </span>
           <div
@@ -98,7 +98,7 @@
           <div
               class="flex items-center justify-center p-4 border border-gray-200 border-dashed bg-gray-50 rounded-xl dark:bg-gray-700 dark:border-neutral-600">
               <h3 class="text-gray-500 dark:text-gray-200">
-                  Selesai. Terimakasih sudah mengisi survei...
+                  Selesai. Terimakasih sudah mengisi survei... Pastikan semua kuisioner sudah terisi
               </h3>
           </div>
       </div>

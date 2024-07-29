@@ -19,7 +19,7 @@ class JawabanResource extends Resource
 {
     protected static ?string $model = Jawaban::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationGroup = 'Survei';
     protected static ?string $navigationLabel = 'Jawaban Kuisioner';
     protected static ?int $navigationSort = 3;
@@ -46,19 +46,17 @@ class JawabanResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('jawaban')->searchable(),
-                TextColumn::make('keterangan'),
-                TextColumn::make('lainnya')->searchable(),
+                TextColumn::make('id')->label('ID'),
+                TextColumn::make('jawaban')->searchable()->label('Jawaban'),
+                // TextColumn::make('keterangan'),
+                // TextColumn::make('lainnya')->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
     

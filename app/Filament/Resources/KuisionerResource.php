@@ -17,6 +17,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -25,8 +26,7 @@ use Closure;
 class KuisionerResource extends Resource
 {
     protected static ?string $model = Kuisioner::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationGroup = 'Survei';
     protected static ?string $navigationLabel = 'Kuisioner';
     protected static ?int $navigationSort = 2;
@@ -58,22 +58,35 @@ class KuisionerResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('survey.nama')->label('Survei'),
-                TextColumn::make('pertanyaan')->searchable(),
-                TextColumn::make('kategori.nama')->searchable(),
-                TextColumn::make('level'),
-                TextColumn::make('syarat'),
+                TextColumn::make('id')->label('ID'),
+                TextColumn::make('pertanyaan')->searchable()->wrap(),
+                TextColumn::make('kategori.nama')->searchable()->wrap(),
+                BadgeColumn::make('level')->label('Type')
+                ->enum([
+                    '1' => 'Sub',
+                    '0' => 'Utama',
+                ])
+                ->color(static function ($state): string {
+                    if ($state === 'true') {
+                        return 'success';
+                    }
+                    
+                    return 'secondary';
+                })
+                ->searchable(),
+                TextColumn::make('syarat')->wrap()->label('Dari ID Ke-?'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
-            ]);
+            // ->bulkActions([
+            //     Tables\Actions\DeleteBulkAction::make(),
+            // ])
+            ;
     }
 
     public static function getRelations(): array
@@ -81,22 +94,6 @@ class KuisionerResource extends Resource
         return [
             RelationManagers\JawabansRelationManager::class,
         ];
-    }
-
-    public function isTableSearchable(): bool
-    {
-        return true;
-    }
-
-    protected function applySearchToTableQuery(Builder $query): Builder
-    {
-        if (filled($searchQuery = $this->getTableSearchQuery())) {
-            $query->whereIn('id', Kuisioner::search($searchQuery)->keys());
-
-        }
-
-        // return $query;
-        return $query->filter(['search' => $searchQuery]);
     }
 
     public static function getPages(): array

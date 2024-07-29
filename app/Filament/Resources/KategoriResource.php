@@ -21,7 +21,7 @@ class KategoriResource extends Resource
 {
     protected static ?string $model = Kategori::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-bookmark';
     protected static ?string $navigationGroup = 'Survei';
     protected static ?string $navigationLabel = 'Kategori Survei';
     protected static ?int $navigationSort = 4;
@@ -48,18 +48,16 @@ class KategoriResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('survey.nama'),
-                TextColumn::make('nama'),
+                TextColumn::make('id')->label('ID'),
+                TextColumn::make('survey.nama')->label('Survei'),
+                TextColumn::make('nama')->label('Nama'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ]);
     }
     

@@ -24,7 +24,7 @@ class RespondenResource extends Resource
 {
     protected static ?string $model = Responden::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-identification';
 
     public static function form(Form $form): Form
     {
@@ -47,6 +47,9 @@ class RespondenResource extends Resource
                 Select::make('jurusan_id')->options(
                     Jurusan::all()->pluck('nama', 'id')
                 ),
+                Select::make('kelas_id')->options(
+                    Jurusan::all()->pluck('nama', 'id')
+                ),
             ]);
     }
 
@@ -56,8 +59,9 @@ class RespondenResource extends Resource
             ->columns([
                 TextColumn::make('nama'),
                 TextColumn::make('jenis_kelamin'),
-                TextColumn::make('sekolah_id'),
-                TextColumn::make('jurusan_id'),
+                TextColumn::make('sekolah.nama'),
+                TextColumn::make('jurusan.nama'),
+                TextColumn::make('kelas.nama'),
             ])
             ->filters([
                 //
