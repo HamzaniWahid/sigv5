@@ -2,7 +2,10 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Jawaban;
 use App\Models\Responden;
+use App\Models\Sekolah;
+use App\Models\Hasil;
 use Carbon\Carbon;
 use Filament\Widgets\LineChartWidget;
 
@@ -12,31 +15,33 @@ class Chart extends LineChartWidget
 
     protected function getData(): array
     {
-        $data = $this->getRespondenPerMonth();
+        $data = Jawaban::
+        with('hasil.responden.sekolah')->
+        where('jawaban', 'Ya')
+        // where('jawaban', 'Ya')
+        // where('sekolah_id', 2)
+        // pluck('responden.nama')
+        // ->where()
+        ->count();
+        //           ->where('jawaban_id', 15)->count();
+        // $iya = Hasil::with('responden.sekolah', 'jawaban')->get();
+        // $sek = Responden::with('sekolah', 'hasil')->get();
+        $sek = Sekolah::all();
+        $oh = [];
+        foreach ($sek as $key) {
+           $oh[] = $data;
+        }
+        dd($oh);
         return [
             'datasets' => [
                 [
-                    'label' => 'Responden Terbuat',
-                    'data' => [3, 3, 5, 2, 5, 3, 25, 45]//$data['respondenPerMonth'],
-                ]
+                    'label' => 'Asal sekolah yang Minat Melanjutkan Studi',
+                    'data' => $iya->pluck('jawaban.id'),
+                    // 'data' => $iya->pluck('responden.sekolah.nama'),
+                ]//tampilkan total siapa responden yg jawab minat di kuisioner
             ],
-            'labels' => $data['months']
+            // 'labels' => Sekolah::all()->pluck('nama')
+            'labels' => $iya->pluck('jawaban.id')//tau dia dari sekolah mana
         ];
-    }
-
-    private function getRespondenPerMonth()
-    {
-        $now = Carbon::now();
-        $respondenPerMonth = [5,3,5,3,5,3,5];
-        $months = collect(range(1, 12))->map(function ($month) use ($now, $respondenPerMonth) {
-            $count = Responden::whereDate('created_at', Carbon::parse($now->month($month)->format('Y-m')))->count();
-            $respondenPerMonth[] = $count;
-            return $now->month($month)->format('M');
-        })->toArray();
-        return [
-            'respondenPerMonth' => $respondenPerMonth,
-            'months' => $months
-        ];
-        // return dd($respondenPerMonth);
     }
 }

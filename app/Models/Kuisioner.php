@@ -31,5 +31,8 @@ class Kuisioner extends Model
     {
         return $this->belongsTo(Kategori::class);
     }
+    public function hasil(){
+        return $this->hasMany(Hasil::class);
+    }
 
 }

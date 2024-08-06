@@ -17,4 +17,13 @@ class Hasil extends Model
 //         'kuisioner_id',
 //         'jawaban_id',
 //     ];
+    public function responden(){
+        return $this->belongsTo(Responden::class);
+    }
+    public function kuisioner(){
+        return $this->belongsTo(Kuisioner::class);
+    }
+    public function jawaban(){
+        return $this->belongsTo(Jawaban::class);
+    }
 }

@@ -1,28 +1,31 @@
 <?php
 
-namespace App\Filament\Resources\KuisionerResource\RelationManagers;
+namespace App\Filament\Resources\RespondenResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class JawabansRelationManager extends RelationManager
+class HasilRelationManager extends RelationManager
 {
-    protected static string $relationship = 'jawabans';
+    protected static string $relationship = 'hasil';
 
-    protected static ?string $recordTitleAttribute = 'jawaban';
+    protected static ?string $recordTitleAttribute = 'kuisioner_id';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('jawaban')
+                Forms\Components\TextInput::make('kuisioner_id')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Nama'),
             ]);
     }
 
@@ -30,8 +33,13 @@ class JawabansRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->label('ID'),
-                Tables\Columns\TextColumn::make('jawaban')->label('Jawaban'),
+                TextColumn::make('kuisioner.pertanyaan')->wrap(),
+                BadgeColumn::make('kuisioner.level')->label('Type')
+                ->enum([
+                    '1' => 'Sub',
+                    '0' => 'Utama',
+                ]),
+                TextColumn::make('jawaban.jawaban'),
             ])
             ->filters([
                 //

@@ -19,9 +19,13 @@ class HasilResource extends Resource
     protected static ?string $model = Hasil::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
-    protected static ?string $navigationGroup = 'Survei';
+    protected static ?string $navigationGroup = 'Hasil Survei';
     protected static ?string $navigationLabel = 'Hasil';
     protected static ?int $navigationSort = 5;
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -35,14 +39,16 @@ class HasilResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('user_id')
+                TextColumn::make('responden.nama'),
+                TextColumn::make('kuisioner.pertanyaan'),
+                TextColumn::make('jawaban.jawaban'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

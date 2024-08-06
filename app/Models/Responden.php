@@ -20,4 +20,7 @@ class Responden extends Model
     public function kelas(){
         return $this->belongsTo(Kelas::class);
     }
+    public function hasil(){
+        return $this->hasMany(Hasil::class);
+    }
 }

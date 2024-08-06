@@ -24,7 +24,7 @@ class KategoriResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-bookmark';
     protected static ?string $navigationGroup = 'Survei';
     protected static ?string $navigationLabel = 'Kategori Survei';
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 2;
     protected static function getNavigationBadgeColor(): ?string
 {
     return static::getModel()::count() > 10 ? 'warning' : 'primary';

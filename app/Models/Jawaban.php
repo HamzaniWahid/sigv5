@@ -11,9 +11,13 @@ class Jawaban extends Model
     use HasFactory;
 
     protected $guarded = [];
-
+    
     public function kuisioners() : BelongsTo 
     {
         return $this->belongsTo(Kuisioner::class);
     }
+    public function hasil(){
+        return $this->hasMany(Hasil::class);
+    }
+
 }

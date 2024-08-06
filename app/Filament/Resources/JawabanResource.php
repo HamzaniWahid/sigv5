@@ -20,7 +20,7 @@ class JawabanResource extends Resource
     protected static ?string $model = Jawaban::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $navigationGroup = 'Survei';
+    protected static ?string $navigationGroup = 'Hasil Survei';
     protected static ?string $navigationLabel = 'Jawaban Kuisioner';
     protected static ?int $navigationSort = 3;
     protected static function getNavigationBadgeColor(): ?string
